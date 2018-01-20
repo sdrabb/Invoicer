@@ -33,14 +33,14 @@ void Receiver_settings::populateDataItem()
     model->setTable("receiver");
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model->select();
-    model->setHeaderData(0, Qt::Horizontal, tr("name"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Surname"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Address"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Civic number"));
+    model->setHeaderData(0, Qt::Horizontal, tr("nome"));
+    model->setHeaderData(1, Qt::Horizontal, tr("cognome"));
+    model->setHeaderData(2, Qt::Horizontal, tr("indirizzo"));
+    model->setHeaderData(3, Qt::Horizontal, tr("numero civico"));
     model->setHeaderData(4, Qt::Horizontal, tr("cap"));
-    model->setHeaderData(5, Qt::Horizontal, tr("Province"));
+    model->setHeaderData(5, Qt::Horizontal, tr("provincia"));
     model->setHeaderData(6, Qt::Horizontal, tr("p.iva"));
-    model->setHeaderData(7, Qt::Horizontal, tr("fiscal code"));
+    model->setHeaderData(7, Qt::Horizontal, tr("codice fiscale"));
     model->setHeaderData(8, Qt::Horizontal, tr("mail"));
 
     ui->tableView->setModel(model);
