@@ -27,12 +27,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    receiver_settings.cpp
+    receiver_settings.cpp \
+    invoice_settings.cpp
 
 HEADERS += \
         mainwindow.h \
-    receiver_settings.h
+    receiver_settings.h \
+    invoice_settings.h
 
 FORMS += \
         mainwindow.ui \
-    receiver_settings.ui
+    receiver_settings.ui \
+    invoice_settings.ui

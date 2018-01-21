@@ -71,7 +71,8 @@ void MainWindow::populateDataItem()
 void MainWindow::on_action_new_invoice_triggered()
 {
 
-
+    this->invoice_settings_view = new Invoice_settings(this);
+    this->invoice_settings_view->show();
 
 }
 
@@ -80,6 +81,8 @@ void MainWindow::on_action_settings_receiver_triggered()
 
     this->rec_settings_view = new Receiver_settings(this);
     this->rec_settings_view->show();
+
+
 
     QString text_to_show = "<p>Merciai Luigi</p>";
 //    ui->receiver_choiches->setText(text_to_show);
