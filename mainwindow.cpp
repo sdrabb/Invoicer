@@ -114,8 +114,7 @@ void MainWindow::on_receiver_choiches_clicked(const QModelIndex &index)
     qDebug("%d",receiver_model->index(index.row() , RECEIVER_ID_COLUMN).data().toInt());
 
     invoice_model->setFilter("owner = " + receiver_model->index(index.row() , RECEIVER_ID_COLUMN).data().toString());
-//    QSqlQuery query;
-//    query.exec("SELECT name, salary FROM employee WHERE salary > 50000");
+
 
 }
 
