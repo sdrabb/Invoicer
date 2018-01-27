@@ -33,15 +33,15 @@ void Receiver_settings::populateDataItem()
     model->setTable("receiver");
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model->select();
-    model->setHeaderData(0, Qt::Horizontal, tr("nome"));
-    model->setHeaderData(1, Qt::Horizontal, tr("cognome"));
-    model->setHeaderData(2, Qt::Horizontal, tr("indirizzo"));
-    model->setHeaderData(3, Qt::Horizontal, tr("numero civico"));
-    model->setHeaderData(4, Qt::Horizontal, tr("cap"));
-    model->setHeaderData(5, Qt::Horizontal, tr("provincia"));
-    model->setHeaderData(6, Qt::Horizontal, tr("p.iva"));
-    model->setHeaderData(7, Qt::Horizontal, tr("codice fiscale"));
-    model->setHeaderData(8, Qt::Horizontal, tr("mail"));
+    model->setHeaderData(RECEIVER_NAME_COLUMN, Qt::Horizontal, tr("nome"));
+    model->setHeaderData(RECEIVER_SURNAME_COLUMN, Qt::Horizontal, tr("cognome"));
+    model->setHeaderData(RECEIVER_ADDRESS_COLUMN, Qt::Horizontal, tr("indirizzo"));
+    model->setHeaderData(RECEIVER_CIVIC_NUMBER_COLUMN, Qt::Horizontal, tr("numero civico"));
+    model->setHeaderData(RECEIVER_CAP_COLUMN, Qt::Horizontal, tr("cap"));
+    model->setHeaderData(RECEIVER_PROVINCE_COLUMN, Qt::Horizontal, tr("provincia"));
+    model->setHeaderData(RECEIVER_PIVA_COLUMN, Qt::Horizontal, tr("p.iva"));
+    model->setHeaderData(RECEIVER_FISCAL_CODE_COLUMN, Qt::Horizontal, tr("codice fiscale"));
+    model->setHeaderData(RECEIVER_MAIL_COLUMN, Qt::Horizontal, tr("mail"));
 
     ui->tableView->setModel(model);
     ui->tableView->setAlternatingRowColors(true);
@@ -52,15 +52,15 @@ void Receiver_settings::add_new_receiver()
 {
     int row=0;
     model->insertRows(row,1);
-    model->setData(model->index(row,0),ui->name_line_edit->text());
-    model->setData(model->index(row,1),ui->surname_line_edit->text());
-    model->setData(model->index(row,2),ui->address_line_edit->text());
-    model->setData(model->index(row,3),ui->civic_number_line_edit->text());
-    model->setData(model->index(row,4),ui->cap_line_edit->text());
-    model->setData(model->index(row,5),ui->province_line_edit->text());
-    model->setData(model->index(row,6),ui->piva_line_edit->text());
-    model->setData(model->index(row,7),ui->fiscal_code_line_edit->text());
-    model->setData(model->index(row,8),ui->mail_line_edit->text());
+    model->setData(model->index(row,RECEIVER_NAME_COLUMN),ui->name_line_edit->text());
+    model->setData(model->index(row,RECEIVER_SURNAME_COLUMN),ui->surname_line_edit->text());
+    model->setData(model->index(row,RECEIVER_ADDRESS_COLUMN),ui->address_line_edit->text());
+    model->setData(model->index(row,RECEIVER_CIVIC_NUMBER_COLUMN),ui->civic_number_line_edit->text());
+    model->setData(model->index(row,RECEIVER_CAP_COLUMN),ui->cap_line_edit->text());
+    model->setData(model->index(row,RECEIVER_PROVINCE_COLUMN),ui->province_line_edit->text());
+    model->setData(model->index(row,RECEIVER_PIVA_COLUMN),ui->piva_line_edit->text());
+    model->setData(model->index(row,RECEIVER_FISCAL_CODE_COLUMN),ui->fiscal_code_line_edit->text());
+    model->setData(model->index(row,RECEIVER_MAIL_COLUMN),ui->mail_line_edit->text());
 }
 
 void Receiver_settings::save_receiver()

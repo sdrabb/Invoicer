@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "receiver_settings.h"
 #include "invoice_settings.h"
+#include "constant_defs.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +26,8 @@ private slots:
     void on_action_settings_receiver_triggered();
 
     void on_receiver_choiches_clicked(const QModelIndex &index);
+
+    void on_delete_selected_invoiice_button_clicked();
 
 private:
     Ui::MainWindow *ui;

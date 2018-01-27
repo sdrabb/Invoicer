@@ -1,0 +1,4 @@
+#ifndef CONSTANT_DEFS_H
+#define CONSTANT_DEFS_H
+
+#endif // CONSTANT_DEFS_H

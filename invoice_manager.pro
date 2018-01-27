@@ -33,7 +33,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     receiver_settings.h \
-    invoice_settings.h
+    invoice_settings.h \
+    constant_defs.h
 
 FORMS += \
         mainwindow.ui \

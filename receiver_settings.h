@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include "constant_defs.h"
+
 namespace Ui {
 class Receiver_settings;
 }
@@ -27,6 +29,7 @@ private:
     Ui::Receiver_settings *ui;
     QSqlTableModel *model;
     QSqlDatabase db;
+
 
     bool initDatabase();
     bool closeDatabase();
