@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QTextDocument>
+#include <QPrinter>
+#include <QPdfWriter>
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug("db not opened");
 
     populateDataItem();
-
+    ui->invoices->verticalHeader()->setVisible(true);
 }
 
 MainWindow::~MainWindow()
@@ -56,6 +60,7 @@ void MainWindow::populateDataItem()
 
     invoice_model->setHeaderData(INVOICE_PROGRESSIVE_NUMBER_COLUMN, Qt::Horizontal, tr("n.p."));
     invoice_model->setHeaderData(INVOICE_TAXABLE_COLUMN, Qt::Horizontal, tr("imponibile"));
+
 
     ui->invoices->setModel(invoice_model);
     ui->invoices->setAlternatingRowColors(true);
@@ -136,4 +141,39 @@ void MainWindow::on_delete_selected_invoiice_button_clicked()
 
 
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    on_action_new_invoice_triggered();
+}
+
+void MainWindow::on_show_invoice_button_clicked()
+{
+    QString html =
+    "<div align=right>"
+       "City, 11/11/2015"
+    "</div>"
+    "<div align=left>"
+       "Sender name<br>"
+       "street 34/56A<br>"
+       "121-43 city"
+    "</div>"
+    "<h1 align=center>DOCUMENT TITLE</h1>"
+    "<p align=justify>"
+       "document content document content document content document content document content document content document content document content document content document content "
+       "document content document content document content document content document content document content document content document content document content document content "
+    "</p>"
+    "<div align=right>sincerly</div>";
+
+    QTextDocument document;
+    document.setHtml(html);
+
+
+    QPdfWriter printer("results.pdf");
+
+    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+    QDesktopServices::openUrl(QUrl("results.pdf"));
+
+    document.print(&printer);
 }

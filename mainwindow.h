@@ -29,6 +29,10 @@ private slots:
 
     void on_delete_selected_invoiice_button_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_show_invoice_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     Receiver_settings *rec_settings_view;

@@ -38,7 +38,7 @@
            <bool>true</bool>
           </attribute>
           <attribute name="verticalHeaderVisible">
-           <bool>true</bool>
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>
@@ -54,6 +54,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>aggiungi fattura</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -65,6 +72,13 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="show_invoice_button">
+          <property name="text">
+           <string>visualizza fattura selezionata</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -103,8 +117,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_new_invoice"/>
    <addaction name="separator"/>
+   <addaction name="action_new_invoice"/>
    <addaction name="action_settings_receiver"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
