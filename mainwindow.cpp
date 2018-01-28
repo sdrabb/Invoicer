@@ -5,6 +5,7 @@
 #include <QPrinter>
 #include <QPdfWriter>
 #include <QDesktopServices>
+#include <QDate>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -149,18 +150,111 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_show_invoice_button_clicked()
 {
+    QItemSelectionModel *select_invoice = ui->invoices->selectionModel();
+    int selected_invoice = select_invoice->selectedRows().first().row();
+
+    QItemSelectionModel *select_receiver = ui->receiver_choiches->selectionModel();
+    int selected_receiver = select_receiver->selectedRows().first().row();
+
+    QString invoice_year = QString::number(QDate(invoice_model->index(selected_invoice,INVOICE_DATE_COLUMN).data().toDate()).year());
+    QString invoice_progressive_number = invoice_model->index(selected_invoice,INVOICE_PROGRESSIVE_NUMBER_COLUMN).data().toString();
+    QString invoice_date = invoice_model->index(selected_invoice,INVOICE_DATE_COLUMN).data().toString();
+    float invoice_taxable = invoice_model->index(selected_invoice,INVOICE_TAXABLE_COLUMN).data().toFloat();
+    QString invoice_iva_percentage = QString::number(SELF_IVA);
+
+    QString sender_city = SELF_CITY;
+    QString sender_name = SELF_NAME;
+    QString sender_surname = SELF_SURNAME;
+    QString sender_address = SELF_ADDRESS;
+    QString sender_civic_number = QString::number(SELF_CIVIC_NUMBER);
+    QString sender_piva = SELF_PIVA;
+    QString sender_fiscal_code = SELF_FISCAL_CODE;
+
+    QString receiver_name = receiver_model->index(selected_receiver,RECEIVER_NAME_COLUMN).data().toString();
+    QString receiver_surname = receiver_model->index(selected_receiver,RECEIVER_SURNAME_COLUMN).data().toString();
+    QString receiver_address = receiver_model->index(selected_receiver,RECEIVER_ADDRESS_COLUMN).data().toString();
+    QString receiver_piva = receiver_model->index(selected_receiver,RECEIVER_PIVA_COLUMN).data().toString();
+    QString receiver_fiscal_code = receiver_model->index(selected_receiver,RECEIVER_FISCAL_CODE_COLUMN).data().toString();
+    QString receiver_cap = receiver_model->index(selected_receiver,RECEIVER_CAP_COLUMN).data().toString();
+    QString receiver_province = receiver_model->index(selected_receiver,RECEIVER_PROVINCE_COLUMN).data().toString();
+    QString receiver_civic_number = receiver_model->index(selected_receiver,RECEIVER_CIVIC_NUMBER_COLUMN).data().toString();
+
     QString html =
     "<div align=right>"
-       "City, 11/11/2015"
+       + sender_city +", "+invoice_date+
     "</div>"
     "<div align=left>"
-       "Sender name<br>"
-       "street 34/56A<br>"
-       "121-43 city"
+       +sender_name+" "+sender_surname+"<br>"
+       +sender_address+" "+sender_civic_number+"<br>"
+       +sender_city+"<br>"
+       +"P.I. "+sender_piva+"<br>"
+       +"C.F. "+sender_fiscal_code+"<br>"
     "</div>"
-    "<h1 align=center>DOCUMENT TITLE</h1>"
+    "<h6 align=center>FATTURA N."+invoice_progressive_number+"/"+invoice_year+" </h6>"+
+    "<h6 align=center>"+sender_city +" LI  "+invoice_date +" </h6>"
+    "<div align=right >"
+       "<table cellspacing=20 >"
+           "<tr>"
+             "<td>SPETT.LE</td>"
+           "</tr>"
+           "<tr>"
+             "<td>"+receiver_name+ " " +receiver_surname +"</td>"
+           "</tr>"
+           "<tr>"
+             "<td>"+receiver_address +" "+receiver_civic_number+"</td>"
+           "</tr>"
+            "<tr>"
+              "<td>P.I. "+receiver_piva+"</td>"
+            "</tr>"
+           "<tr>"
+             "<td>Cod.Fisc. "+receiver_fiscal_code+"</td>"
+           "</tr>"
+          "<tr>"
+            "<td>"+receiver_cap+" "+receiver_province+"</td>"
+          "</tr>"
+       "</table> "
+    "</div>"
+    "<div>"
+       "<table cellspacing=20 >"
+            "<tr>"
+              "<td>PROVVIGIONI MATURATE</td>"
+              "<td>IMPONIBILE</td>"
+              "<td>&euro;.</td>"
+              "<td>"+QString::number(invoice_taxable)+"</td>"
+            "</tr>"
+            "<tr>"
+              "<td></td>"
+              "<td>IVA "+invoice_iva_percentage+"&#37;</td>"
+              "<td>&euro;.</td>"
+              "<td>"+ QString::number( (invoice_taxable/100) * SELF_IVA ) +"</td>"
+            "</tr>"
+             "<tr>"
+               "<td></td>"
+               "<td> TOTALE </td>"
+               "<td> &euro;.</td>"
+               "<td>"+ QString::number( ((invoice_taxable/100) * SELF_IVA) + invoice_taxable )  +"</td>"
+             "</tr>"
+             "<tr>"
+               "<td></td>"
+               "<td> RIT.ACCONTO "+QString::number(SELF_RIT_ACC)+" su 50&#37; IMP.</td>"
+               "<td> &euro;.</td>"
+               "<td>"+ QString::number(((invoice_taxable/2)/100) *SELF_RIT_ACC)  +"</td>"
+             "</tr>"
+             "<tr>"
+               "<td></td>"
+               "<td> ENASARCO "+QString::number(SELF_ENASARCO)+"</td>"
+               "<td> &euro;.</td>"
+               "<td>"+ QString::number((invoice_taxable/100) *SELF_ENASARCO)  +"</td>"
+             "</tr>"
+             "<tr>"
+               "<td></td>"
+               "<td> TOTALE </td>"
+               "<td> &euro;.</td>"
+               "<td>"+ QString::number((((invoice_taxable/100) * SELF_IVA) + invoice_taxable) - (((invoice_taxable/100) *SELF_ENASARCO)+(((invoice_taxable/2)/100) *SELF_RIT_ACC)) )  +"</td>"
+           "</tr>"
+        "</table> "
+    "</div>"
     "<p align=justify>"
-       "document content document content document content document content document content document content document content document content document content document content "
        "document content document content document content document content document content document content document content document content document content document content "
     "</p>"
     "<div align=right>sincerly</div>";
