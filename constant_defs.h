@@ -33,17 +33,7 @@
 #define ARTICLE2INVOICE_QUANTITY_COLUMN   (2)
 
 
-/*self company invoice preview parameters */
-#define SELF_NAME "Luigi"
-#define SELF_SURNAME "Merciai"
-#define SELF_PIVA  "04935920480"
-#define SELF_FISCAL_CODE "MRCLGU61A03D583L"
-#define SELF_CITY "Figline Valdarno"
-#define SELF_ADDRESS "via B.Vanzetti"
-#define SELF_CIVIC_NUMBER (30)
-#define SELF_IVA  (22)
-#define SELF_RIT_ACC (23)
-#define SELF_ENASARCO    (7.775)
+
 
 
 #endif // CONSTANT_DEFS_H
