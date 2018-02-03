@@ -21,4 +21,29 @@
 #define INVOICE_OWNER_COLUMN   (3)
 #define INVOICE_DATE_COLUMN   (4)
 
+
+/* map model <--> db_table Article */
+#define ARTICLE_ID_COLUMN   (0)
+#define ARTICLE_NAME_COLUMN   (1)
+#define ARTICLE_PRICE_COLUMN   (2)
+
+/* map model <--> db_table Article2Invoice */
+#define ARTICLE2INVOICE_ARTICLE_COLUMN   (0)
+#define ARTICLE2INVOICE_INVOICE_COLUMN   (1)
+#define ARTICLE2INVOICE_QUANTITY_COLUMN   (2)
+
+
+/*self company invoice preview parameters */
+#define SELF_NAME "Luigi"
+#define SELF_SURNAME "Merciai"
+#define SELF_PIVA  "04935920480"
+#define SELF_FISCAL_CODE "MRCLGU61A03D583L"
+#define SELF_CITY "Figline Valdarno"
+#define SELF_ADDRESS "via B.Vanzetti"
+#define SELF_CIVIC_NUMBER (30)
+#define SELF_IVA  (22)
+#define SELF_RIT_ACC (23)
+#define SELF_ENASARCO    (7.775)
+
+
 #endif // CONSTANT_DEFS_H
