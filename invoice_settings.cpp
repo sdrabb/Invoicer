@@ -74,3 +74,8 @@ void Invoice_settings::on_add_new_clicked()
 
 
 }
+
+Ui::Invoice_settings *Invoice_settings::getUi() const
+{
+    return ui;
+}

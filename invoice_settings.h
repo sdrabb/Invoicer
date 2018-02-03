@@ -27,6 +27,9 @@ public:
     */
     void populate_combo_box();
 
+
+    Ui::Invoice_settings *getUi() const;
+
 private slots:
 
 

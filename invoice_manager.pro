@@ -29,15 +29,21 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     receiver_settings.cpp \
-    invoice_settings.cpp
+    invoice_settings.cpp \
+    article_settings.cpp \
+    article2invoice_settings.cpp
 
 HEADERS += \
         mainwindow.h \
     receiver_settings.h \
     invoice_settings.h \
-    constant_defs.h
+    constant_defs.h \
+    article_settings.h \
+    article2invoice_settings.h
 
 FORMS += \
         mainwindow.ui \
     receiver_settings.ui \
-    invoice_settings.ui
+    invoice_settings.ui \
+    article_settings.ui \
+    article2invoice_settings.ui

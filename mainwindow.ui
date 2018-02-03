@@ -61,6 +61,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>aggiungi/visualizza capi fattura</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -119,7 +126,10 @@
    </attribute>
    <addaction name="separator"/>
    <addaction name="action_new_invoice"/>
+   <addaction name="separator"/>
    <addaction name="action_settings_receiver"/>
+   <addaction name="separator"/>
+   <addaction name="actionaggiungi_rimuovi_articolo"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -143,8 +153,15 @@
     </property>
     <addaction name="action_settings_receiver"/>
    </widget>
+   <widget class="QMenu" name="menuarticolo">
+    <property name="title">
+     <string>articolo</string>
+    </property>
+    <addaction name="actionaggiungi_rimuovi_articolo_2"/>
+   </widget>
    <addaction name="menufile"/>
    <addaction name="menudestinatario"/>
+   <addaction name="menuarticolo"/>
   </widget>
   <action name="action_new_invoice">
    <property name="text">
@@ -154,6 +171,16 @@
   <action name="action_settings_receiver">
    <property name="text">
     <string>aggiungi/rimuovi destinatario</string>
+   </property>
+  </action>
+  <action name="actionaggiungi_rimuovi_articolo">
+   <property name="text">
+    <string>aggiungi/rimuovi articolo</string>
+   </property>
+  </action>
+  <action name="actionaggiungi_rimuovi_articolo_2">
+   <property name="text">
+    <string>aggiungi rimuovi articolo</string>
    </property>
   </action>
  </widget>

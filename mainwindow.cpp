@@ -6,6 +6,7 @@
 #include <QPdfWriter>
 #include <QDesktopServices>
 #include <QDate>
+#include "article2invoice_settings.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,7 +33,6 @@ MainWindow::~MainWindow()
 void MainWindow::populateDataItem()
 {
     /* populate table related to receiver */
-
     receiver_model = new QSqlTableModel(this, db);
     receiver_model->setTable("receiver");
     receiver_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -66,6 +66,20 @@ void MainWindow::populateDataItem()
     ui->invoices->setModel(invoice_model);
     ui->invoices->setAlternatingRowColors(true);
     receiver_model->setHeaderData(INVOICE_OWNER_COLUMN, Qt::Horizontal, tr("progressive"));
+
+
+    /* populate table related to articles */
+    article_model = new QSqlTableModel(this,db);
+    article_model->setTable("article");
+    article_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    article_model->select();
+
+
+    /* populate table related to article2 invoice */
+    article2invoice_model = new QSqlTableModel(this,db);
+    article2invoice_model->setTable("Article2Invoice");
+    article2invoice_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    article2invoice_model->select();
 
 
 
@@ -153,14 +167,18 @@ void MainWindow::on_show_invoice_button_clicked()
     QItemSelectionModel *select_invoice = ui->invoices->selectionModel();
     int selected_invoice = select_invoice->selectedRows().first().row();
 
-    QItemSelectionModel *select_receiver = ui->receiver_choiches->selectionModel();
-    int selected_receiver = select_receiver->selectedRows().first().row();
+    int selected_receiver;
+
+//    QItemSelectionModel *select_receiver = ui->receiver_choiches->selectionModel();
+//    int selected_receiver = select_receiver->selectedRows().first().row();
 
     QString invoice_year = QString::number(QDate(invoice_model->index(selected_invoice,INVOICE_DATE_COLUMN).data().toDate()).year());
     QString invoice_progressive_number = invoice_model->index(selected_invoice,INVOICE_PROGRESSIVE_NUMBER_COLUMN).data().toString();
     QString invoice_date = invoice_model->index(selected_invoice,INVOICE_DATE_COLUMN).data().toString();
     float invoice_taxable = invoice_model->index(selected_invoice,INVOICE_TAXABLE_COLUMN).data().toFloat();
     QString invoice_iva_percentage = QString::number(SELF_IVA);
+    int invoice_owner = invoice_model->index(selected_invoice,INVOICE_OWNER_COLUMN).data().toInt();
+
 
     QString sender_city = SELF_CITY;
     QString sender_name = SELF_NAME;
@@ -170,6 +188,15 @@ void MainWindow::on_show_invoice_button_clicked()
     QString sender_piva = SELF_PIVA;
     QString sender_fiscal_code = SELF_FISCAL_CODE;
 
+    for(int i = 0; i < receiver_model->rowCount(); i++)
+    {
+        if (receiver_model->index(i, RECEIVER_ID_COLUMN).data().toInt() == invoice_owner){
+            selected_receiver = i;
+            break;
+        }
+
+    }
+
     QString receiver_name = receiver_model->index(selected_receiver,RECEIVER_NAME_COLUMN).data().toString();
     QString receiver_surname = receiver_model->index(selected_receiver,RECEIVER_SURNAME_COLUMN).data().toString();
     QString receiver_address = receiver_model->index(selected_receiver,RECEIVER_ADDRESS_COLUMN).data().toString();
@@ -178,6 +205,13 @@ void MainWindow::on_show_invoice_button_clicked()
     QString receiver_cap = receiver_model->index(selected_receiver,RECEIVER_CAP_COLUMN).data().toString();
     QString receiver_province = receiver_model->index(selected_receiver,RECEIVER_PROVINCE_COLUMN).data().toString();
     QString receiver_civic_number = receiver_model->index(selected_receiver,RECEIVER_CIVIC_NUMBER_COLUMN).data().toString();
+
+
+    float iva = (invoice_taxable/100) * SELF_IVA;
+    float total_with_iva = ((invoice_taxable/100) * SELF_IVA) + invoice_taxable;
+    float rit_acc = ((invoice_taxable/2)/100) *SELF_RIT_ACC;
+    float enasarco = (invoice_taxable/100) *SELF_ENASARCO;
+    float total = (((invoice_taxable/100) * SELF_IVA) + invoice_taxable) - (((invoice_taxable/100) *SELF_ENASARCO)+(((invoice_taxable/2)/100) *SELF_RIT_ACC));
 
     QString html =
     "<div align=right>"
@@ -226,38 +260,34 @@ void MainWindow::on_show_invoice_button_clicked()
               "<td></td>"
               "<td>IVA "+invoice_iva_percentage+"&#37;</td>"
               "<td>&euro;.</td>"
-              "<td>"+ QString::number( (invoice_taxable/100) * SELF_IVA ) +"</td>"
+              "<td>"+ QString::number( iva ) +"</td>"
             "</tr>"
              "<tr>"
                "<td></td>"
                "<td> TOTALE </td>"
                "<td> &euro;.</td>"
-               "<td>"+ QString::number( ((invoice_taxable/100) * SELF_IVA) + invoice_taxable )  +"</td>"
+               "<td>"+ QString::number( total_with_iva )  +"</td>"
              "</tr>"
              "<tr>"
                "<td></td>"
                "<td> RIT.ACCONTO "+QString::number(SELF_RIT_ACC)+" su 50&#37; IMP.</td>"
                "<td> &euro;.</td>"
-               "<td>"+ QString::number(((invoice_taxable/2)/100) *SELF_RIT_ACC)  +"</td>"
+               "<td>"+ QString::number(rit_acc)  +"</td>"
              "</tr>"
              "<tr>"
                "<td></td>"
                "<td> ENASARCO "+QString::number(SELF_ENASARCO)+"</td>"
                "<td> &euro;.</td>"
-               "<td>"+ QString::number((invoice_taxable/100) *SELF_ENASARCO)  +"</td>"
+               "<td>"+ QString::number(enasarco)  +"</td>"
              "</tr>"
              "<tr>"
                "<td></td>"
                "<td> TOTALE </td>"
                "<td> &euro;.</td>"
-               "<td>"+ QString::number((((invoice_taxable/100) * SELF_IVA) + invoice_taxable) - (((invoice_taxable/100) *SELF_ENASARCO)+(((invoice_taxable/2)/100) *SELF_RIT_ACC)) )  +"</td>"
+               "<td>"+ QString::number(total )  +"</td>"
            "</tr>"
         "</table> "
-    "</div>"
-    "<p align=justify>"
-       "document content document content document content document content document content document content document content document content document content document content "
-    "</p>"
-    "<div align=right>sincerly</div>";
+    "</div>";
 
     QTextDocument document;
     document.setHtml(html);
@@ -270,3 +300,18 @@ void MainWindow::on_show_invoice_button_clicked()
 
     document.print(&printer);
 }
+
+void MainWindow::on_actionaggiungi_rimuovi_articolo_triggered()
+{
+    this->article_settings_view = new Article_settings(this->article_model, this);
+    this->article_settings_view->show();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QItemSelectionModel *select_invoice = ui->invoices->selectionModel();
+    this->art2inv = new Article2Invoice_settings(this->article2invoice_model,this->invoice_model,this->article_model,select_invoice,this);
+    this->art2inv->show();
+}
+
+
